@@ -1,0 +1,48 @@
+.page__header {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-header__logo {
+    color: white;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 30px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.header-logo__img {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.header__btn {
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    background-color: #eeddff;
+    border: 2px solid #0d7ea0;
+    border-radius: 25px;
+    box-shadow: 3px 3px 3px #ada1ba;
+    cursor: pointer;
+}
+
+.header__btn--login {
+    background-color: aquamarine;
+}
+
+.header__btn--unlogin {
+    background-color: lightpink;
+}
