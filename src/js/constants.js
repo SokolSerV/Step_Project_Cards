@@ -23,3 +23,6 @@ export const formVisit = modalVisit.querySelector("form");
 export const formVisitSpecialist = formVisit.querySelector("#specialist");
 export const formVisitInfoWrapper = formVisit.querySelector("#form__info");
 export const btnFormVisit = formVisit.querySelector(".form__btn");
+
+export let token;
+export const setToken = (dataToken) => (token = dataToken);
