@@ -5,13 +5,18 @@ import {
     btnCreateVisit,
     btnUnlogin,
     closeBtnLogin,
+    btnFilter,
     setToken,
+    closeBtnVisit,
     formLogin,
+    formVisit,
+    modalVisit,
 } from "./constants.js";
 
 import Modal from "./Modal.js";
 import Requests from "./Requests.js";
 import Card from "./Card.js";
+import Filter from "./Filter.js";
 
 const modal = new Modal();
 const card = new Card();
@@ -56,4 +61,26 @@ btnUnlogin.addEventListener("click", () => {
     listCards.innerHTML = "";
 
     deskText.classList.remove("hidden");
+});
+
+btnFilter.addEventListener("click", () => {
+    new Filter().getFilter();
+});
+
+btnCreateVisit.addEventListener("click", () => {
+    modal.openModalNewVisit();
+});
+
+modalVisit.addEventListener("click", (event) => {
+    if (
+        event.target === closeBtnVisit ||
+        !event.target.closest(".modal__content")
+    ) {
+        modal.closeModal();
+    }
+});
+
+formVisit.addEventListener("submit", (event) => {
+    event.preventDefault();
+    modal.handlerFormVisit();
 });
