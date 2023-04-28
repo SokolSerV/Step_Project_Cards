@@ -15,6 +15,7 @@ import {
     formVisitSpecialist,
     formVisitInfoWrapper,
     btnFormVisit,
+    listCards,
 } from "./constants.js";
 
 const card = new Card();
@@ -60,9 +61,11 @@ export default class Modal {
 
     openModalNewVisit() {
         modalVisit.classList.add("active");
+        formVisitSpecialist.disabled = false;
 
         formVisitSpecialist.addEventListener("change", (event) => {
             this.selectSwitch(event.target.value);
+            btnFormVisit.innerText = "Create";
         });
     }
 
@@ -81,6 +84,29 @@ export default class Modal {
         btnFormVisit.classList.remove("hidden");
     }
 
+    openModalUpdateVisit(targetCard) {
+        modalVisit.classList.add("active");
+
+        const curentSpecialist = targetCard.getAttribute("data-specialist");
+        formVisitSpecialist.value = curentSpecialist;
+        formVisitSpecialist.disabled = true;
+
+        this.selectSwitch(curentSpecialist);
+        btnFormVisit.innerText = "Edit";
+
+        const pElsTargetCard = targetCard.querySelectorAll("p");
+        const elemsFormUpdateVisit =
+            formVisitInfoWrapper.querySelectorAll("[name]");
+
+        for (const elem of elemsFormUpdateVisit) {
+            for (const pEl of pElsTargetCard) {
+                if (pEl.classList.contains(elem.name)) {
+                    elem.value = pEl.innerText.split(" - ")[1];
+                }
+            }
+        }
+    }
+
     handlerFormVisit(targetCardId) {
         const specialist = formVisitSpecialist.value;
         const objectBody = { specialist };
@@ -91,7 +117,14 @@ export default class Modal {
             objectBody[name] = value;
         }
 
-        this.requestPost(objectBody);
+        if (btnFormVisit.innerText === "Create") {
+            console.log("post");
+            this.requestPost(objectBody);
+        } else {
+            console.log("put");
+
+            this.requestPut(objectBody, targetCardId);
+        }
     }
 
     requestPost(objectPost) {
@@ -100,6 +133,17 @@ export default class Modal {
                 this.closeModal();
 
                 card.renderSingle(dataPost);
+            })
+            .catch((error) => alert(error));
+    }
+
+    requestPut(objectPut, targetCardId) {
+        Requests.put(objectPut, targetCardId)
+            .then((dataPut) => {
+                this.closeModal();
+
+                listCards.querySelector(`[data-id="${targetCardId}"]`).remove();
+                card.renderSingle(dataPut);
             })
             .catch((error) => alert(error));
     }

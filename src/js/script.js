@@ -11,6 +11,7 @@ import {
     formLogin,
     formVisit,
     modalVisit,
+    btnFormVisit,
 } from "./constants.js";
 
 import Modal from "./Modal.js";
@@ -76,6 +77,7 @@ modalVisit.addEventListener("click", (event) => {
         event.target === closeBtnVisit ||
         !event.target.closest(".modal__content")
     ) {
+        console.log("ok2");
         modal.closeModal();
     }
 });
@@ -83,4 +85,59 @@ modalVisit.addEventListener("click", (event) => {
 formVisit.addEventListener("submit", (event) => {
     event.preventDefault();
     modal.handlerFormVisit();
+});
+
+listCards.addEventListener("click", (event) => {
+    const targetCard = event.target.closest("li");
+    const targetCardId = targetCard.dataset.id;
+
+    if (event.target.matches(".btnSwowMore")) {
+        targetCard.querySelectorAll(".hidden").forEach((elem) => {
+            elem.classList.remove("hidden");
+        });
+
+        event.target.classList.add("hidden");
+    }
+
+    if (event.target.matches(".btnShowLess")) {
+        targetCard.querySelectorAll("p").forEach((elem) => {
+            if (
+                !elem.classList.contains("fullname") &&
+                !elem.classList.contains("specialist")
+            ) {
+                elem.classList.add("hidden");
+            }
+        });
+
+        event.target.classList.add("hidden");
+        targetCard.querySelector(".btnSwowMore").classList.remove("hidden");
+    }
+
+    if (event.target.matches(".btnEdit")) {
+        modal.openModalUpdateVisit(targetCard);
+
+        btnFormVisit.addEventListener("click", submitEditCard);
+        function submitEditCard(event) {
+            event.preventDefault();
+            modal.handlerFormVisit(targetCardId);
+
+            btnFormVisit.removeEventListener("click", submitEditCard);
+        }
+    }
+
+    if (event.target.matches(".btnDel")) {
+        const cardId = targetCard.dataset.id;
+
+        Requests.delete(cardId)
+            .then((dataDel) => {
+                console.log(dataDel + " - The card has been deleted");
+
+                targetCard.remove();
+
+                if (listCards.innerHTML === "") {
+                    deskText.classList.remove("hidden");
+                }
+            })
+            .catch((error) => alert(error));
+    }
 });
