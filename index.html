@@ -1,11 +1,132 @@
 <!DOCTYPE html>
 <html lang="en" class="page">
-    @@include("html/head.html", { "title":"Step Project - Cards" })
+    <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step Project - Cards</title>
+    <link rel="stylesheet" href="./css/style.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap"
+        rel="stylesheet"
+    />
+</head>
+
     <body class="page__body">
-        @@include("html/header.html", {})
-        <main class="page__main">@@include("html/desk.html", {})</main>
+        <header class="page__header page-header">
+    <div class="page__container header-container">
+        <a class="page-header__logo header-logo" href="#">
+            <img
+                class="header-logo__img"
+                src="./img/header_logo.png"
+                alt="header_logo.png"
+                width="50"
+                height="50"
+            />
+            Medical desk
+        </a>
+        <div class="page-header__btn-wrapper">
+            <button class="header__btn header__btn--login">Login</button>
+            <button class="header__btn header__btn--create hidden">
+                Create visit
+            </button>
+            <button class="header__btn header__btn--unlogin hidden">
+                Logout
+            </button>
+        </div>
+    </div>
+</header>
+
+        <main class="page__main"><section class="main__desk desk">
+    <div class="page__container">
+        <form class="desk__filter filter">
+            <input type="text" name="content" placeholder="Title/content" />
+            <!-- <input
+                class="filter__status"
+                type="text"
+                list="status"
+                name="status"
+                placeholder="Status"
+            />
+            <datalist id="status">
+                <option value="open"></option>
+                <option value="done"></option>
+            </datalist>
+            <input
+                class="filter__priority"
+                type="text"
+                list="priority"
+                name="priority"
+                placeholder="Priority"
+            />
+            <datalist id="priority">
+                <option value="high"></option>
+                <option value="normal"></option>
+                <option value="low"></option>
+            </datalist> -->
+            <select name="status" style="padding: 1.5px 2px">
+                <option value="">Status not selected</option>
+                <option value="open">Open</option>
+                <option value="done">Done</option>
+            </select>
+            <select name="priority" style="padding: 1.5px 2px">
+                <option value="">Priority not selected</option>
+                <option value="high">High</option>
+                <option value="normal">Normal</option>
+                <option value="low">Low</option>
+            </select>
+            <button class="filter__btn" type="button">Search</button>
+        </form>
+        <p class="desk__text">No items have been added</p>
+        <ul class="desk__list-cards"></ul>
+    </div>
+</section>
+</main>
         <script src="./js/script.js" type="module"></script>
-        @@include("html/modal-login.html", {})
-        @@include("html/modal-newVisit.html", {})
+        <div id="modal-login" class="modal">
+    <div class="modal__content">
+        <span class="modal__close close__login">×</span>
+        <form class="form">
+            <input
+                class="form__item"
+                type="email"
+                name="email"
+                placeholder="Enter email"
+                required
+                value="saf@gmail.com"
+            />
+            <input
+                class="form__item"
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                required
+                value="saf123"
+            />
+            <button class="form__btn" type="submit">Sign in</button>
+        </form>
+    </div>
+</div>
+
+        <div id="modal-newVisit" class="modal">
+    <div class="modal__content">
+        <span class="modal__close close__visit">×</span>
+        <form class="form">
+            <select class="form__item" name="specialist" id="specialist">
+                <option disabled selected value="default">
+                    Choose the specialist
+                </option>
+                <option value="cardiologist">Cardiologist</option>
+                <option value="dentist">Dentist</option>
+                <option value="therapist">Therapist</option>
+            </select>
+            <div id="form__info"></div>
+            <button class="form__btn hidden" type="submit">Create</button>
+        </form>
+    </div>
+</div>
+
     </body>
 </html>
